@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hq.helloLinux.mapper.DailyMapper">
+<resultMap id="BaseResultMap" type="com.hq.helloLinux.entity.Daily" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="date" property="date" jdbcType="TIMESTAMP" />
+    <result column="weight" property="weight" jdbcType="DOUBLE" />
+    <result column="mood" property="mood" jdbcType="VARCHAR" />
+    <result column="performance" property="performance" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, date, weight, mood, performance, status,remark
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from daily
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from daily
+  </select>
+    <insert id="insert" parameterType="com.hq.helloLinux.entity.Daily" useGeneratedKeys="true" keyProperty="id">
+    insert into daily
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="date != null" >
+        date,
+      </if>
+      <if test="weight != null" >
+        weight,
+      </if>
+      <if test="mood != null" >
+        mood,
+      </if>
+      <if test="performance != null" >
+        performance,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="date != null" >
+        #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="mood != null" >
+        #{mood,jdbcType=VARCHAR},
+      </if>
+      <if test="performance != null" >
+        #{performance,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="com.hq.helloLinux.entity.Daily" >
+    update daily
+    <set >
+      <if test="date != null" >
+        date = #{date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="mood != null" >
+        mood = #{mood,jdbcType=VARCHAR},
+      </if>
+      <if test="performance != null" >
+        performance = #{performance,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hq.helloLinux.mapper.FoodMapper">
+    <insert id="insert" parameterType="com.hq.helloLinux.entity.Food" useGeneratedKeys="true" keyProperty="id">
+    insert into food
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="quantity != null" >
+        quantity,
+      </if>
+      <if test="enjoy != null" >
+        enjoy,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="dailyid != null" >
+        dailyId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        #{quantity,jdbcType=VARCHAR},
+      </if>
+      <if test="enjoy != null" >
+        #{enjoy,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="dailyid != null" >
+        #{dailyid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <insert id="batchInsert">
+    INSERT INTO food
+            (name, quantity,enjoy,remark,dailyid)
+    VALUES
+    <foreach collection ="list" item="food" separator =",">
+         (#{food.name}, #{food.quantity},#{food.enjoy},#{food.remark},#{food.dailyid})
+    </foreach >
+</insert>
+<sql id="Base_Column_List" >
+    id, name, quantity, enjoy, remark, dailyId
+  </sql>
+  <select id="selectByDailyId" resultType="com.hq.helloLinux.entity.Food" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from food
+    where dailyId = #{dailyId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByDailyId" parameterType="java.lang.Long">
+  	DELETE FROM food 
+  	WHERE dailyId = #{dailyId,jdbcType=BIGINT}
+  </delete>
+</mapper>
