@@ -1,4 +1,4 @@
-FROM openjdk:8-jre
-ADD ./target/gs-rest-service-0.1.0.jar app.jar
-RUN sh -c 'touch /app.jar'
+FROM java:8-alpine
+ADD ./target/timor-0.1.1.jar app.jar
+EXPOSE 8080
 ENTRYPOINT ["java","-jar","/app.jar"]
